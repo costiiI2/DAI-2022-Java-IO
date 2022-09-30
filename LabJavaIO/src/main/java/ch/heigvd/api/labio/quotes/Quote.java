@@ -1,5 +1,7 @@
 package ch.heigvd.api.labio.quotes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -9,8 +11,10 @@ import java.util.List;
  * source. When using the QuoteClient, you retrieve instances of this class.
  *
  * @author Olivier Liechti
+ *
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Quote implements Serializable {
 
   /**
@@ -19,37 +23,6 @@ public class Quote implements Serializable {
    * handled automatically for us. This is something that we will see in the
    * AMT course next year.
    */
-  public class Value {
-
-    private long id;
-    private String joke;
-    private String[] categories;
-
-    public long getId() {
-      return id;
-    }
-
-    public void setId(long id) {
-      this.id = id;
-    }
-
-    public String getJoke() {
-      return joke;
-    }
-
-    public void setJoke(String joke) {
-      this.joke = joke;
-    }
-
-    public String[] getCategories() {
-      return categories;
-    }
-
-    public void setCategories(String[] categories) {
-      this.categories = categories;
-    }
-
-  }
 
   /**
    * In the 2015 version of this lab, we were using a service called
@@ -61,7 +34,15 @@ public class Quote implements Serializable {
 
   private String type;
 
-  private Value value;
+  private String content;
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public String getContent() {
+    return content;
+  }
 
   /**
    * In the 2015 version of the lab, we were getting quotes with multiple lines. This
@@ -84,14 +65,6 @@ public class Quote implements Serializable {
     this.type = type;
   }
 
-  public Value getValue() {
-    return value;
-  }
-
-  public void setValue(Value value) {
-    this.value = value;
-  }
-
   public List<String> getTags() {
     return Arrays.asList(tags);
   }
@@ -105,7 +78,7 @@ public class Quote implements Serializable {
      * instance variable "quotesSplitInLines".
      */
     if (quoteSplitInLines == null) {
-      StringBuilder quote = new StringBuilder(value.getJoke());
+      StringBuilder quote = new StringBuilder(getContent());
       int nextSpace = quote.indexOf(" ");
       int counter = 0;
       while (nextSpace != -1) {
