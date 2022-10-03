@@ -13,8 +13,7 @@ Note: the default branch of this repository is named `main` and not `master`, wh
 The objective of this lab is to get familiar with the Java IO APIs and to interact with the file system. You will implement an application that performs the following tasks:
 
 1. The user invokes the application on the **command line** and provides a numeric argument (*n*).
-2. The application **uses a Web Service client** (which is provided to you) to fetch *n* **quotes** from the [Internet Chuck Norris Database](http://www.icndb.com/api/) online service.
-3. The application stores the content of each quote in a **text file** (utf-8), on the local filesystem. It uses the *tags* associated to each quote to create a hierarchical structure of directories.
+2. The application **uses a Web Service client** (which is provided to you) to fetch *n* **quotes** from [https://api.quotable.io/random](https://api.quotable.io/random). The original lab used in the past fetched quotes from the [Internet Chuck Norris Database](http://www.icndb.com/api/) online service (which explains the picture shown in this README). The Chuck Norris Database has unfortunately been down (returning a server error) for a while now. This has no impact on your work (although is less funny...).
 4. The application then **traverses the local file system** and applies a transformation to each visited quote file.
 5. The processing consists of 1) converting all characters to their **uppercase** value, 2) adding a **line number** at the beginning of each line and 3) converting all line endings to Unix-style line endings (only '\n').
 
