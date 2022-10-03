@@ -24,7 +24,7 @@ public class QuoteClient {
    * This has changed in the 2016 version of the lab. We were using the "itheardquotes" API, which is now down. We have
    * replaced it with another API that generates random jokes.
   */
-    static String WEB_SERVICE_ENDPOINT = "http://api.icndb.com/jokes/random?firstName=Juergen&lastName=Ehrensberger&escape=javascript";
+    static String WEB_SERVICE_ENDPOINT = "https://api.quotable.io/random";
 
   /**
    * Use this method to invoke the iheartquotes.com web service and receive
@@ -37,10 +37,14 @@ public class QuoteClient {
       .register(JacksonFeature.class)
       .register(SimpleObjectMapperProvider.class)
       .build();
+
     WebTarget target = client.target(WEB_SERVICE_ENDPOINT);
     Invocation.Builder invocationBuilder = target.request();
     Response response = invocationBuilder.get();
     Quote quote = response.readEntity(Quote.class);
+    // In the 2022 version of the lab, we decided to force the generation of random tags, because the new-used API does
+    // not use enough tags and it would make the sort process too easy.
+    quote.setTags(TagsGenerator.pickRandomTags());
     return quote;
   }
 
