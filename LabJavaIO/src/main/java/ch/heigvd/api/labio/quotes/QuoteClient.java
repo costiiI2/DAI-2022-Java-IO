@@ -42,6 +42,9 @@ public class QuoteClient {
     Invocation.Builder invocationBuilder = target.request();
     Response response = invocationBuilder.get();
     Quote quote = response.readEntity(Quote.class);
+    // In the 2022 version of the lab, we decided to force the generation of random tags, because the new-used API has
+    // not enough tags and it would break the sort process.
+    quote.setTags(TagsGenerator.pickRandomTags());
     return quote;
   }
 

@@ -18,13 +18,6 @@ import java.util.List;
 public class Quote implements Serializable {
 
   /**
-   * This is a class that describes the structure of the JSON payload that is
-   * sent by the Chuck Norris API. The deserialization from JSON into Java is
-   * handled automatically for us. This is something that we will see in the
-   * AMT course next year.
-   */
-
-  /**
    * In the 2015 version of this lab, we were using a service called
    * "iheartquotes". The API was sending us a list of tags with every quote. We
    * don't have this from the Chuck Norris facts API, so we generate random tags
@@ -69,6 +62,9 @@ public class Quote implements Serializable {
     return Arrays.asList(tags);
   }
 
+  public void setTags (String[] tags) {
+    this.tags = tags;
+  }
   
   public String getQuote() {
 
