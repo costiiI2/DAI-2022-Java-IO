@@ -1,9 +1,13 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+import lombok.SneakyThrows;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,42 +19,32 @@ import java.util.logging.Logger;
  * @author Juergen Ehrensberger
  */
 public class FileTransformer {
-  private static final Logger LOG = Logger.getLogger(FileTransformer.class.getName());
+    private static final Logger LOG = Logger.getLogger(FileTransformer.class.getName());
 
-  public void transform(File inputFile) {
+    @SneakyThrows
+    public void transform(File inputFile) {
+        String outName = inputFile + ".out";
+        File outFile = new File(outName);
+        String StringToBeWritten = "";
+        NoOpCharTransformer t = new NoOpCharTransformer();
+        UpperCaseCharTransformer upT = new UpperCaseCharTransformer();
+        LineNumberingCharTransformer liT = new LineNumberingCharTransformer();
+        FileReader fr = new FileReader(inputFile);
+        int i;
+        while ((i = fr.read()) != -1) {
+            String charToBeTransformed = "";
+            charToBeTransformed += (char) i;
+            charToBeTransformed = upT.transform(charToBeTransformed);
+            StringToBeWritten += liT.transform(charToBeTransformed);
+        }
 
-    /*
-     * This method opens the given inputFile and copies the
-     * content to an output file.
-     * The output file has a file name <inputFile-Name>.out, for example:
-     *   quote-2.utf --> quote-2.utf.out
-     * Both files must be opened (read or write) with encoding "UTF-8".
-     * Before writing each character to the output file, the transformer calls
-     * a character transformer to transform the character before writing it to the output.
-     */
-
-    /* TODO: first start with the NoOpCharTransformer which does nothing.
-     *  Later, replace it by a combination of the UpperCaseCharTransformer
-     *  and the LineNumberCharTransformer.
-     */
-    // ... transformer = ...
-
-    /* TODO: implement the following logic here:
-     *  - open the inputFile and an outputFile
-     *    Use UTF-8 encoding for both.
-     *    Filename of the output file: <inputFile-Name>.out (that is add ".out" at the end)
-     *  - Copy all characters from the input file to the output file.
-     *  - For each character, apply a transformation: start with NoOpCharTransformer,
-     *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
-     */
-    String outName = inputFile +".out";
-    File outFile = new File(outName);
-
-
-    try {
-
-    } catch (Exception ex) {
-      LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
+        try {
+            FileOutputStream out = new FileOutputStream(outFile);
+            byte[] bytes = StringToBeWritten.getBytes(StandardCharsets.UTF_8);
+            out.write(bytes);
+            out.close();
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
+        }
     }
-  }
 }
