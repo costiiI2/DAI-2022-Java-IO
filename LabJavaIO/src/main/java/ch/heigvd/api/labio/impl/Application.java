@@ -71,7 +71,7 @@ public class Application {
     QuoteClient client = new QuoteClient();
     for (int i = 0; i < numberOfQuotes; i++) {
       Quote quote = client.fetchQuote();
-      storeQuote(quote,"quote-i.utf8");
+      storeQuote(quote,"quote-"+i+".utf8");
 
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
@@ -124,6 +124,7 @@ public class Application {
     FileOutputStream out = new FileOutputStream(file);
     byte[] mybytes = quote.getContent().getBytes();
     out.write(mybytes);
+    out.close();
   }
   
   public void processQuoteFiles() throws IOException {
