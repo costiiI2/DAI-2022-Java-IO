@@ -27,6 +27,7 @@ public class LineNumberingCharTransformer {
   public String transform(String s ) {
       if(firstChar){// si cest la premier ligne
           firstChar = false;
+          if(s.equals("\n"))return lineNbr + ". \n"+ ++lineNbr +". ";
           return lineNbr + ". "+s;
       }
       if(s.equals("\n")){//toute les lignes suivantes
