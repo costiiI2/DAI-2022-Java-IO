@@ -11,9 +11,7 @@ import java.util.logging.Logger;
 public class UpperCaseCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
 
-  public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+  public String transform(String s) {
+   return s.toUpperCase();
   }
 }
