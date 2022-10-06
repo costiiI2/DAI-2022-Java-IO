@@ -2,6 +2,7 @@ package ch.heigvd.api.labio.impl;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Arrays;
 
 /**
  * The FileExplorer performs an exploration of the file system. It
@@ -19,13 +20,12 @@ public class FileExplorer {
             transformer.transform(rootDirectory);
         }else {
             File quotes[] =rootDirectory.listFiles();
+            if(quotes != null) {
+                Arrays.sort(quotes);
                 for (File quote : quotes) {
                     explore(quote);
                 }
+            }
         }
-        /* TODO: implement the logic to explore the rootDirectory.
-         *  Use the Java JDK documentation to see:
-         *  - to sort the items (files and directories) alphabetically
-         */
     }
 }
