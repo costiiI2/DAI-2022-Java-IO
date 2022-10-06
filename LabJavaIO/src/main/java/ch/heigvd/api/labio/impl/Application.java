@@ -70,6 +70,7 @@ public class Application {
     QuoteClient client = new QuoteClient();
     for (int i = 0; i < numberOfQuotes; i++) {
       Quote quote = client.fetchQuote();
+      storeQuote(quote,"quote-i.utf8");
       /* TODO: There is a missing piece here!
        *  As you can see, this method handles the first part of the lab. It uses the web service
        *  client to fetch quotes. We have removed a single line from this method. It is a call to
@@ -127,6 +128,8 @@ public class Application {
 
     // Create the output file under the new directory. Use the filename received as parameter.
     File file = new File(directory, filename);
+
+    FileUtils.writeStringToFile(file, quote.getQuote(), "UTF-8");
 
     /* Now write the quote into the file using Output streams.
      * The content of the file is in quote.getQuote().
