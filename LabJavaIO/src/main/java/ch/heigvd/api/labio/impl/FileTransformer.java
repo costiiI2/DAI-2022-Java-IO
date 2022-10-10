@@ -37,6 +37,7 @@ public class FileTransformer {
                 charToBeTransformed = upT.transform(charToBeTransformed);
                 StringToBeWritten.append(liT.transform(charToBeTransformed));
             }
+
             reader.close();
         } catch (FileNotFoundException e) {
             LOG.log(Level.SEVERE, "Error file not found.", e);
@@ -50,6 +51,7 @@ public class FileTransformer {
         try (FileOutputStream out = new FileOutputStream(outFile)) {
             byte[] bytes = StringToBeWritten.toString().getBytes(StandardCharsets.UTF_8);
             out.write(bytes);
+            out.flush();
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
         }
