@@ -13,8 +13,7 @@ import java.util.Arrays;
  * @author Olivier Liechti, Juergen Ehrensberger
  */
 public class FileExplorer {
-
-    public void explore(File rootDirectory) {// root = /workspace/quotes
+    public void explore(File rootDirectory) {
         FileTransformer transformer = new FileTransformer();
         if(rootDirectory.isFile()){
             transformer.transform(rootDirectory);

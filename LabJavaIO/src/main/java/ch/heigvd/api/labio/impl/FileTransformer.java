@@ -24,23 +24,24 @@ public class FileTransformer {
     @SneakyThrows
     public void transform(File inputFile) {
         String outName = inputFile + ".out";
-        File outFile = new File(outName);
-        String StringToBeWritten = "";
-        NoOpCharTransformer t = new NoOpCharTransformer();
+        StringBuilder StringToBeWritten = new StringBuilder();
+        //NoOpCharTransformer t = new NoOpCharTransformer();
         UpperCaseCharTransformer upT = new UpperCaseCharTransformer();
         LineNumberingCharTransformer liT = new LineNumberingCharTransformer();
         FileReader fr = new FileReader(inputFile);
-        int i;
-        while ((i = fr.read()) != -1) {
+        int tmp;
+        while ((tmp = fr.read()) != -1) {
             String charToBeTransformed = "";
-            charToBeTransformed += (char) i;
+            charToBeTransformed += (char) tmp;
             charToBeTransformed = upT.transform(charToBeTransformed);
-            StringToBeWritten += liT.transform(charToBeTransformed);
+            StringToBeWritten.append(liT.transform(charToBeTransformed));
         }
+        fr.close();
 
         try {
+            File outFile = new File(outName);
             FileOutputStream out = new FileOutputStream(outFile);
-            byte[] bytes = StringToBeWritten.getBytes(StandardCharsets.UTF_8);
+            byte[] bytes = StringToBeWritten.toString().getBytes(StandardCharsets.UTF_8);
             out.write(bytes);
             out.close();
         } catch (Exception ex) {
