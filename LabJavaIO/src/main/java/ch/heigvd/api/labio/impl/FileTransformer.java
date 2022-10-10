@@ -28,16 +28,15 @@ public class FileTransformer {
         //NoOpCharTransformer t = new NoOpCharTransformer();
         UpperCaseCharTransformer upT = new UpperCaseCharTransformer();
         LineNumberingCharTransformer liT = new LineNumberingCharTransformer();
-        FileReader fr = new FileReader(inputFile);
+        Reader reader = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
         int tmp;
-        while ((tmp = fr.read()) != -1) {
+        while ((tmp = reader.read()) != -1) {
             String charToBeTransformed = "";
             charToBeTransformed += (char) tmp;
             charToBeTransformed = upT.transform(charToBeTransformed);
             StringToBeWritten.append(liT.transform(charToBeTransformed));
         }
-        fr.close();
-
+        reader.close();
         try {
             File outFile = new File(outName);
             FileOutputStream out = new FileOutputStream(outFile);
