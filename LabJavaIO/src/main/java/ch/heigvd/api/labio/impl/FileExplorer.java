@@ -15,11 +15,11 @@ import java.util.Arrays;
 public class FileExplorer {
     public void explore(File rootDirectory) {
         FileTransformer transformer = new FileTransformer();
-        if(rootDirectory.isFile()){
+        if (rootDirectory.isFile()) {
             transformer.transform(rootDirectory);
-        }else {
-            File quotes[] =rootDirectory.listFiles();
-            if(quotes != null) {
+        } else {
+            File quotes[] = rootDirectory.listFiles();
+            if (quotes != null) {
                 Arrays.sort(quotes);
                 for (File quote : quotes) {
                     explore(quote);
