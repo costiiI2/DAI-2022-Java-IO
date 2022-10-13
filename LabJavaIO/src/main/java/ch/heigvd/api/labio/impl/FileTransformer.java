@@ -25,19 +25,20 @@ public class FileTransformer {
     public void transform(File inputFile) {
         String outName = inputFile + ".out";
         StringBuilder StringToBeWritten = new StringBuilder();
-        UpperCaseCharTransformer upT = new UpperCaseCharTransformer();
-        LineNumberingCharTransformer liT = new LineNumberingCharTransformer();
+        //we use stringBuilder because we do lots of concatenations
+        UpperCaseCharTransformer upperTransform = new UpperCaseCharTransformer();
+        LineNumberingCharTransformer lineTransform = new LineNumberingCharTransformer();
         Reader reader = null;
         try {
+            //we verify that the file exists and that we can read from it
             reader = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
             int tmp;
             while ((tmp = reader.read()) != -1) {
                 String charToBeTransformed = "";
                 charToBeTransformed += (char) tmp;
-                charToBeTransformed = upT.transform(charToBeTransformed);
-                StringToBeWritten.append(liT.transform(charToBeTransformed));
+                charToBeTransformed = upperTransform.transform(charToBeTransformed);
+                StringToBeWritten.append(lineTransform.transform(charToBeTransformed));
             }
-
             reader.close();
         } catch (FileNotFoundException e) {
             LOG.log(Level.SEVERE, "Error file not found.", e);
@@ -49,6 +50,7 @@ public class FileTransformer {
 
         File outFile = new File(outName);
         try (FileOutputStream out = new FileOutputStream(outFile)) {
+            //no need of out.close() because it is done automatically in this case
             byte[] bytes = StringToBeWritten.toString().getBytes(StandardCharsets.UTF_8);
             out.write(bytes);
             out.flush();
